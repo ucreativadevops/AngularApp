@@ -3,9 +3,15 @@ pipeline {
     agent any //requerido
 
     stages {
-        stage('Imprimir Hola Mundo'){
+        stage('Instalar dependencies:'){
             steps {
-                bat "python holamundo.py"
+                bat "npm install"
+            }
+        }
+    
+        stage('Compilar la aplicacion: '){
+            steps {
+                bat "npm run build"
             }
         }
     }
