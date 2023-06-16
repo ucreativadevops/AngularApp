@@ -3,14 +3,14 @@ pipeline {
 
     stages {
         
-        stage('Descargar Codigo') {
+        stage('Descargar Codigos') {
             steps {
                 bat 'npm install'
             }
         }
         
       
-        stage('Despliegue en Ambiente de Desarrollo') {
+        stage('Despliegue en Ambiente de Desarrollo!!') {
             steps {
                 bat 'npm run build'
             }
