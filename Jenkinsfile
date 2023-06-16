@@ -3,7 +3,7 @@ pipeline {
 
     stages {
         
-        stage('Descargar Codigos') {
+        stage('Descargar Codigo!!') {
             steps {
                 bat 'npm install'
             }
