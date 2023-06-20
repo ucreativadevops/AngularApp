@@ -5,14 +5,14 @@ pipeline {
         
         stage('Descargar Codigitos') {
             steps {
-                bat 'npm install'
+                sh 'npm install'
             }
         }
         
       
         stage('Despliegue en Ambiente de desarrollitos!!!s!') {
             steps {
-                bat 'npm run build'
+                sh 'npm run build'
             }
         }
     }
