@@ -3,16 +3,23 @@ pipeline {
 
     stages {
         
-        stage('Descargar Codigitos') {
+        stage('Instalar dependencias') {
             steps {
                 sh 'npm install'
             }
         }
         
       
-        stage('Despliegue en Ambiente de desarrollitos!!!s!') {
+        stage('Compilacion del APP') {
             steps {
                 sh 'npm run build'
+            }
+        }
+
+        stage('Mostrar Archivos') {
+            //when {branch 'dev'}
+            steps {
+                sh 'ls -la'
             }
         }
     }
