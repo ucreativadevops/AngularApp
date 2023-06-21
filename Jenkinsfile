@@ -17,9 +17,21 @@ pipeline {
         }
 
         stage('Mostrar Archivos') {
-            //when {branch 'dev'}
+        
             steps {
                 sh 'ls -la'
+                sh 'pwd'
+                sh 'cd /dist/'
+                sh 'ls -la'
+
+                
+            }
+
+         }
+
+        stage('Despliegue de aplicacion') {
+            steps {
+                sh 'cp /dist/AngularApp/* /tmp/deploy'
             }
         }
     }
