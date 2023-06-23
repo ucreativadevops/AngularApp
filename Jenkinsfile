@@ -1,6 +1,9 @@
 pipeline{
     agent any
 
+environment {
+        correos = 'devopschrisrd@gmail.com'
+    }
     stages{
         stage('Instalar dependencias'){
             steps{
@@ -20,5 +23,11 @@ pipeline{
             }
         }
 
+    }
+        post{
+          always{
+            emailext body: "Notificacion de cambio Jenkins", subject: "Jenkins update", to: "${correo}"
+
+      }
     }
 }
