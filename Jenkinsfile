@@ -22,7 +22,6 @@ environment {
                 sh 'ls -la'
             }
         }
-
     }
         post{
           always{
