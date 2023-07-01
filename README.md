@@ -1,5 +1,8 @@
 # Instrucciones para Aplicacion Angular
 
+### Agente 
+El agente para ejecutar la app Dotnet tiene por etiqueta `linux-agent`
+
 ### Comandos a Ejecutar
 
 | Fase | Comando |
