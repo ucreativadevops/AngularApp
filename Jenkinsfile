@@ -14,6 +14,7 @@ pipeline {
        stage('Instalar Dependencias'){
            steps{
               sh 'npm install'
+            }  
            }
        stage('Compilacion del app'){
            steps{
