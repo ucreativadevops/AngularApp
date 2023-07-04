@@ -1,73 +1,82 @@
-pipeline {
-   agent {
-     label "linux-agent"
+pipeline{
+    agent {
+        label "linux-agent"
     }
 
-   environment {
-       LISTA_CORREOS = 'kevinpavonucreativa@gmail.com'
-       CUERPO_CORREO = "El pipeline ${BUILD_URL} se creo sin problemas,"
-       CUERPO_CORREO2 = "El pipeline ${BUILD_URL} experimento problemas,"
-       TITULO_CORREO = "Detalles pipeline ${BUILD_URL} STATUS"
-   }
+    stages{
 
-   stages{
-       //Integracion Continua
-       stage('Instalar Dependencias'){
-           steps{
-              sh 'npm install'
-           }
-       }
-       stage('Correr Pruebas Unitarias'){
-           steps{
-              sh 'npm run test'
-           }
-       }
-       stage('Correr SonarQube'){
-           steps{
-              withSonarQubeEnv('SonarQubeCursoCI'){
-                  sh "/opt/sonar-scanner/bin/sonar-scanner -Dsonar.projectkey=AngularApp -Dsonar.sources=src"
-              }
-           }
-       }
+        stage("aprobar despliegue"){
+            input{
+                message "¿Desea comenzar el despliegue?"
+                ok "Si"
+            }
+            steps{
+              echo "comenzando deploy"
+            }
+        }
 
+        stage("Intalacion de dependencias"){
+            steps{
+                sh "npm install"
+            }
+        }
+        
+        stage ("Prueba unitaria"){
+            steps{
+                echo "comando de las pruebas unitarias npm run test"
+            }
+        }
+/*
+        stage('Pruebas de seguridad-sonarqube'){
+            steps{
+                withSonarQubeEnv('SonarQubeCursoCI'){
+                    sh "/opt/sonar-scanner/bin/sonar-scanner -Dsonar.projectKey=AngularApp"
+                }
+            }
+        }*/
 
-       stage('SonarQube Quality Gate'){
-           steps{
-              sleep 5
-              timeout (time: 10, unit: 'MINUTES'){
-                  waitForQualityGate abortPipeline: true
-              }
-           }
-       }
-       stage('Compilacion del APP'){
-           steps{
-              sh 'npm run build'
-           }
-       }
+        stage ("Compilacion de la aplicacion"){
+            steps{
+                sh "npm run build"
+            }
+        }
 
-       stage('Mostrar Archivos'){
-           steps{
-              sh 'ls -la'
-           }
-       }
+        /*post{
+            success {
+                emailext body: "La prueba ha finalizado con exito", subject: "Aviso", to: "sebasucreativa123@gmail.com"
+            }
+            failure {
+                emailext body: "La prueba no finalizo con exito", subject: "Aviso", to: "sebasucreativa123@gmail.com"
+            }
+        }*/
 
-       //Despliegue
-       stage('Despliegue de la aplicacion'){
-           steps{
-              sh 'cp dist/CICD-kevin/*'
-           }
-       }
+        /*
+        when (branch 'dev'){
+            steps{
+                sh 'scp dist/AngularApp/* root@206.189.254.187:/usr/ucreativa/sebas-dev/'
+            }
+        }
+        when (branch 'staging'){
+            steps{
+                sh "scp dist/AngularApp/* root@206.189.254.187:/usr/ucreativa/sebas-staging/"
+            }
+        }
+        when (branch "main"){
+            steps{
+                sh "scp dist/AngularApp/* root@206.189.254.187:/usr/ucreativa/sebas-prod/"
+            }
+        }
+        */
+    }
 
+    post{
+        success {
+            emailext body: "La prueba ha finalizado con exito", subject: "Aviso", to: "josecursoci@gmail.com"
+        }
+        failure {
+            emailext body: "La prueba no finalizo con exito", subject: "Aviso", to: "josecursoci@gmail.com"
+        }
+     }
 
-   }
-
-   post {
-       success {
-          emailext body: "${CUERPO_CORREO} proceso exitoso", subject: "${TITULO_CORREO}", to: "${LISTA_CORREOS}"
-       }
-       failure {
-          emailext body: "${CUERPO_CORREO2} revisar errores ", subject: "${TITULO_CORREO}", to: "${LISTA_CORREOS}"
-       }
-       
-   }
+    
 }
