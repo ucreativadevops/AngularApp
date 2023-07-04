@@ -5,17 +5,17 @@ pipeline{
 
     stages{
 
-        stage("aprobar despliegue"){
+        stage("Confirmación despliegue"){
             input{
                 message "¿Desea comenzar el despliegue?"
                 ok "Si"
             }
             steps{
-              echo "comenzando deploy"
+              echo "Comenzando deploy"
             }
         }
 
-        stage("Intalacion de dependencias"){
+        stage("Intalación de dependencias"){
             steps{
                 sh "npm install"
             }
@@ -23,7 +23,7 @@ pipeline{
         
         stage ("Prueba unitaria"){
             steps{
-                echo "comando de las pruebas unitarias npm run test"
+                echo "Comando de las pruebas unitarias npm run test"
             }
         }
 /*
@@ -35,7 +35,7 @@ pipeline{
             }
         }*/
 
-        stage ("Compilacion de la aplicacion"){
+        stage ("Compilación de la aplicación"){
             steps{
                 sh "npm run build"
             }
@@ -71,10 +71,10 @@ pipeline{
 
     post{
         success {
-            emailext body: "La prueba ha finalizado con exito", subject: "Aviso", to: "josecursoci@gmail.com"
+            emailext body: "La prueba fue exitosa", subject: "Aviso", to: "josecursoci@gmail.com"
         }
         failure {
-            emailext body: "La prueba no finalizo con exito", subject: "Aviso", to: "josecursoci@gmail.com"
+            emailext body: "La prueba tuvo un fallo", subject: "Aviso", to: "josecursoci@gmail.com"
         }
      }
 
