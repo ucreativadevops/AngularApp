@@ -22,7 +22,7 @@ pipeline {
            }
        }
 
-       stage('Mostrar Archivos'){
+       stage('Mostrar archivos'){
            steps{
               sh 'ls -la'
            }
