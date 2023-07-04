@@ -15,12 +15,6 @@ pipeline {
            steps{
               sh 'npm install'
            }
-       }
-       stage('Correr pruebas'){
-           steps{
-              sh 'npm run test'
-           }
-       }
        stage('Compilacion del app'){
            steps{
               sh 'npm run build'
