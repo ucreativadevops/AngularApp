@@ -15,7 +15,7 @@ pipeline{
             }
         }
 
-        stage("Intalación de dependencias"){
+        stage("Instalación de dependencias"){
             steps{
                 sh "npm install"
             }
