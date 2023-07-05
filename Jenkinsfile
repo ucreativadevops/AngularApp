@@ -18,7 +18,7 @@ pipeline {
            }
        stage('Compilacion del app'){
            steps{
-              sh 'npm run build'
+              bat 'npm run build'
            }
        }
 
